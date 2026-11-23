@@ -66,8 +66,6 @@ p{margin:0}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle at 1px 1px,var(--dotgrid) 1.2px,transparent 0);background-size:24px 24px;
   -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.6) 45%,transparent 80%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.6) 45%,transparent 80%)}
 .hero-inner{padding-block:clamp(56px,8vw,104px) 0;display:grid;gap:20px}
-.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--laurel);display:inline-block}
 .wordmark{font-weight:700;font-size:clamp(60px,10vw,128px);letter-spacing:-.055em;line-height:.92;display:flex;align-items:baseline;flex-wrap:wrap;color:var(--ink)}
 .wordmark .b{font-weight:300;color:var(--faint);letter-spacing:-.035em;font-size:.5em;margin-left:.06em}
 .expand{font-family:var(--f-display);font-weight:400;font-size:clamp(17px,2.05vw,26px);line-height:1.3;color:var(--muted);letter-spacing:-.01em}
@@ -80,7 +78,6 @@ p{margin:0}
 .authors .names a:hover{color:var(--c1);background-image:linear-gradient(var(--c1),var(--c1))}
 .authors sup{font-size:.68em;color:var(--faint);margin-left:1px}
 .say{font-family:var(--f-mono);font-size:12.5px;color:var(--faint)}
-.say em{font-style:normal;color:var(--ink-2)}
 .qblock{display:grid;gap:20px;margin-top:20px;padding-top:28px;border-top:1px solid var(--line)}
 .question{font-family:var(--f-display);font-weight:500;font-size:clamp(21px,2.1vw,27px);line-height:1.32;color:var(--ink);letter-spacing:-.015em}
 .question em{font-style:normal;font-weight:600;background-image:linear-gradient(transparent 58%,var(--mark) 58%);padding:0 2px}
@@ -90,7 +87,6 @@ p{margin:0}
 .qcaps p{font-size:15px;color:var(--muted);margin-top:4px;white-space:nowrap}
 .qcaps p i{font-style:normal;color:var(--faint);margin:0 2px}
 .qcaps p b{color:var(--ink);font-weight:600}
-.qnote{font-size:13px;color:var(--faint)}
 @media (max-width:1000px){.qcaps{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;max-width:620px}}
 @media (max-width:480px){.qcaps p{white-space:normal;font-size:14px}}
 .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
@@ -441,10 +437,9 @@ img{max-width:100%}
 <main>
 <div class="hero" id="overview">
   <div class="wrap hero-inner">
-    <div class="eyebrow"><i></i>Benchmark · 60 executable-scene tasks · 13 coding agents</div>
     <h1 class="wordmark">CAESR<span class="b">-Bench</span></h1>
     <p class="expand">Benchmarking <b>C</b>oding <b>A</b>gents for <b>E</b>xecutable <b>S</b>cene <b>R</b>eplication</p>
-    <p class="say">/ˈsiː.zər/ · pronounced <em>“Caesar Bench”</em></p>
+    <p class="say">/ˈsiː.zər/</p>
     <div class="authors">
       <p class="names"><span><a href="https://lzhangbj.github.io/" target="_blank" rel="noopener">Lin Zhang</a><sup>1</sup></span><span><a href="https://dragonlzm.github.io/zhuomingliu.github.io/" target="_blank" rel="noopener">Zhuoming Liu</a><sup>1</sup></span><span><a href="https://www.zhuoranyu.com/" target="_blank" rel="noopener">Zhuoran Yu</a><sup>1</sup></span><span><a href="http://www.yfan.site/" target="_blank" rel="noopener">Yue Fan</a><sup>2</sup></span><span><a href="https://wangxinyilinda.github.io/" target="_blank" rel="noopener">Xinyi Wang</a><sup>3</sup></span><span><a href="https://www.libangzheng.com/" target="_blank" rel="noopener">Bangzheng Li</a><sup>3</sup></span><span><a href="https://zefancai.com/" target="_blank" rel="noopener">Zefan Cai</a><sup>1</sup></span><span><a href="https://ryx19th.github.io/" target="_blank" rel="noopener">Yixuan Ren</a><sup>3</sup></span><span><a href="https://recordmp3.github.io/" target="_blank" rel="noopener">Zhenggang Tang</a><sup>3</sup></span><span><a href="https://yinli-vision.github.io/" target="_blank" rel="noopener">Yin Li</a><sup>1</sup></span></p>
       <p class="affs"><span><sup>1</sup>University of Wisconsin–Madison</span><span><sup>2</sup>University of California, Santa Cruz</span><span><sup>3</sup>Luma AI</span></p>
@@ -457,7 +452,6 @@ img{max-width:100%}
         <div style="--h:var(--c3)"><span>Control</span><p>Given simulator <i>→</i> <b>goal reached</b></p></div>
         <div style="--h:var(--c4)"><span>Diagnosis</span><p>Old simulator <i>→</i> <b>what changed</b></p></div>
       </div>
-      <p class="qnote">Four capabilities, each tested separately</p>
     </div>
     <div class="cta">
       <a class="btn primary" href="#leaderboard">See the leaderboard ↓</a>
