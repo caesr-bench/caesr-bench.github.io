@@ -213,6 +213,7 @@ tr.pinned{background:color-mix(in srgb,var(--laurel) 10%,transparent)!important}
 .agent .tags{display:flex;gap:4px}
 .tag{font-family:var(--f-mono);font-size:10px;padding:1px 6px;border-radius:4px;background:var(--soft);color:var(--muted);white-space:nowrap}
 .tag.open{background:color-mix(in srgb,var(--c3) 12%,transparent);color:var(--c3)}
+.tag.eff{background:color-mix(in srgb,var(--c1) 11%,transparent);color:var(--c1)}
 .tag.new{background:color-mix(in srgb,var(--laurel) 14%,transparent);color:var(--laurel)}
 .laurel{width:18px;height:18px;color:var(--laurel);flex:none}
 .cell{display:grid;grid-template-columns:minmax(24px,1fr) auto;align-items:center;gap:10px}
@@ -449,7 +450,8 @@ dialog.task::backdrop{background:rgba(16,24,38,.32);backdrop-filter:blur(6px)}
 .facts h5{margin:0 0 4px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);font-weight:500}
 .facts p{font-size:14px;color:var(--ink-2)}
 .ranking{min-width:0}
-.ranking h4{margin:0 0 10px;font-family:var(--f-display);font-size:17px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ranking h4{margin:0 0 10px;font-family:var(--f-display);font-size:17px;font-weight:600;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 12px}
+.ranking h4 span{white-space:nowrap}
 .ranking h4 small{font-family:var(--f-body);font-size:12px;color:var(--faint);font-weight:400}
 .rk{display:grid;grid-template-columns:28px minmax(0,150px) minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:13px;padding:4px 0;border-radius:6px}
 .rk.pinned{background:color-mix(in srgb,var(--laurel) 12%,transparent)}
@@ -552,13 +554,13 @@ img{max-width:100%}
   <div class="wrap">
     <div class="vid-head">
       <div class="kicker">Overview video</div>
-      <h2 class="h3">CAESR-Bench in two minutes</h2>
+      <h2 class="h3">CAESR-Bench in three minutes</h2>
     </div>
     <div class="player" id="player">
       <video id="promo" preload="none" playsinline poster="assets/video/poster.webp">
         <source src="assets/video/caesr-bench-overview.mp4" type="video/mp4">
       </video>
-      <button type="button" class="play-big" id="play-big" aria-label="Play the overview video (2 minutes 7 seconds)"><span class="pb"><span class="tri"></span><span class="lbl">Play · 2:07</span></span></button>
+      <button type="button" class="play-big" id="play-big" aria-label="Play the overview video (2 minutes 49 seconds)"><span class="pb"><span class="tri"></span><span class="lbl">Play · 2:49</span></span></button>
     </div>
   </div>
 </section>
@@ -613,7 +615,7 @@ img{max-width:100%}
 
     <div class="glance-wrap">
       <div class="kicker">At a glance</div>
-      <h3 class="h3">Category averages of all 13 agents</h3>
+      <h3 class="h3">Category averages of all 13 agents at high reasoning effort</h3>
       <div class="glance" id="glance"><p class="empty">Loading scores…</p></div>
     </div>
   </div>
@@ -625,6 +627,7 @@ img{max-width:100%}
       <div>
         <div class="kicker">Leaderboard</div>
         <h2 class="h2">How do the agents compare?</h2>
+        <p class="lede">Each agent is a model in a command-line harness: Codex, Claude Code or Gemini CLI. All 1,560 runs use the <strong>high</strong> reasoning-effort setting.</p>
       </div>
       <div class="controls">
         <div class="seg" role="group" aria-label="Leaderboard view">
@@ -658,7 +661,7 @@ img{max-width:100%}
   <div class="wrap">
     <div class="kicker">Side by side</div>
     <h2 class="h2">One task, thirteen agents.</h2>
-    <p class="lede">One task from each family. First what the agent is given, then what each of the 13 agents produced on the same case, ordered by the score of that run.</p>
+    <p class="lede">One task from each family. First what the agent is given, then what each of the 13 agents, all at high reasoning effort, produced on the same case, ordered by the score of that run.</p>
     <div class="cmp-groups" id="cmp-tabs" role="group" aria-label="Task to compare"></div>
     <div class="cmp-stage">
       <div class="cmp-task" id="cmp-task"></div>
@@ -803,7 +806,7 @@ function ranked(list,k){
   return s;
 }
 function agentCell(a){
-  return '<div class="agent" data-agent="'+a.id+'"><span class="nm">'+esc(a.name)+'</span><span class="tags"><span class="tag">'+a.harness+'</span>'+(a.open?'<span class="tag open">open</span>':'')+(a.new?'<span class="tag new" title="Added after the paper\'s evaluation of eleven agents">new</span>':'')+'</span></div>';
+  return '<div class="agent" data-agent="'+a.id+'"><span class="nm">'+esc(a.name)+'</span><span class="tags"><span class="tag">'+a.harness+'</span><span class="tag eff" title="Reasoning effort requested for every run of this agent">effort: high</span>'+(a.open?'<span class="tag open">open</span>':'')+(a.new?'<span class="tag new" title="Added after the paper\'s evaluation of eleven agents">new</span>':'')+'</span></div>';
 }
 function sortTh(k,label,extra){
   var on=LB.sort===k;
@@ -1118,7 +1121,7 @@ function openTask(i){
     '<div><h5>What counts as correct</h5><p>'+esc(t.ok)+'</p></div><div><h5>How it is scored</h5><p>'+esc(t.score)+'</p></div></div></div>'+
     '<div class="dlg-res"><div class="step"><b>2</b>The results</div>'+
     (ck>=0?'<button type="button" class="cmp-link" id="to-cmp"><img src="assets/compare/'+t.id+'.webp" alt=""><span><i aria-hidden="true" style="font-style:normal">▶</i> Watch all 13 agents side by side</span></button>':'')+
-    '<div class="ranking"><h4>Agent ranking <small>Score / 100 · mean of 2 runs · bar marks ±</small></h4>'+rows+'</div></div></div>'+
+    '<div class="ranking"><h4><span>Agent ranking</span><small>High reasoning effort · score / 100 · mean of 2 runs · bar marks ±</small></h4>'+rows+'</div></div></div>'+
     '<div class="dlg-nav"><button type="button" id="pv">← '+esc(prev.title)+'</button><button type="button" id="nx">'+esc(next.title)+' →</button></div></div>';
   inpWire(dlg,true);
   document.getElementById("x").onclick=closeTask;
