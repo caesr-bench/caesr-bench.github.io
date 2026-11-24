@@ -58,7 +58,7 @@ p{margin:0}
 .nav{display:flex;gap:2px;margin-left:auto}
 .nav a{font-size:14px;text-decoration:none;color:var(--muted);padding:6px 12px;border-radius:999px;white-space:nowrap;transition:color .15s,background .15s}
 .nav a:hover,.nav a[aria-current="true"]{color:var(--ink);background:var(--soft)}
-@media (max-width:560px){.brand span{display:none}.nav a{padding:6px 8px;font-size:13px}}
+@media (max-width:560px){.brand span{display:none}.nav a{padding:6px 8px;font-size:13px}.nav a[data-sec="overview"]{display:none}}
 @media (max-width:400px){.nav a[data-sec="cite"]{display:none}}
 
 /* ---------- hero ---------- */
@@ -304,6 +304,48 @@ td.use:nth-last-child(2){border-left:1px solid var(--line)}
 .play-big[hidden]{display:none}
 @media (max-width:560px){.play-big .tri{width:52px;height:52px}.play-big .lbl{font-size:12px}}
 
+/* ---------- side by side ---------- */
+.cmp-block{border-top:1px solid var(--line)}
+.cmp-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:32px}
+.cmp-group{--c:var(--c1);min-width:0}
+.cmp-gname{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cmp-gname::before{content:"";width:18px;height:2px;background:var(--c)}
+.cmp-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cmp-tab{--c:var(--c1);font:inherit;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0;overflow:hidden;cursor:pointer;text-align:left;min-width:0;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s,transform .15s}
+.cmp-tab img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--soft)}
+.cmp-tab span{font-size:12.5px;padding:6px 9px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.cmp-tab:hover{border-color:var(--c);transform:translateY(-2px)}
+.cmp-tab[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 0 2px var(--c);color:var(--ink);font-weight:600}
+@media (max-width:900px){
+  .cmp-groups{grid-template-columns:repeat(12,minmax(0,1fr));gap:6px}
+  .cmp-group,.cmp-row{display:contents}
+  .cmp-gname,.cmp-tab span{display:none}
+  .cmp-tab{border-radius:8px;border-bottom:3px solid var(--c)}
+  .cmp-tab img{aspect-ratio:1/1}
+}
+@media (max-width:560px){.cmp-groups{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.cmp-stage{display:flex;flex-direction:column;margin-top:20px}
+.cmp-player{position:relative;aspect-ratio:16/9;width:100%;border-radius:16px;overflow:hidden;background:#F7F6F2;border:1px solid var(--line);box-shadow:var(--shadow)}
+.cmp-box{width:100%;min-width:0}
+.cmp-box.m{max-width:480px;margin-inline:auto}
+.cmp-box.m .cmp-player{aspect-ratio:960/1890}
+.cmp-player video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#F7F6F2;cursor:pointer}
+.cmp-ctl{display:flex;align-items:center;gap:12px;margin-top:12px}
+.cmp-ctl button{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;padding:0;transition:border-color .15s}
+.cmp-ctl button:hover{border-color:var(--ink)}
+.cmp-ctl svg{width:14px;height:14px;fill:currentColor;display:block}
+.cmp-ctl input{flex:1;min-width:0;accent-color:var(--ink);cursor:pointer;margin:0}
+.cmp-box:fullscreen{background:#F7F6F2;display:flex;flex-direction:column;justify-content:center;padding:20px 24px;max-width:none}
+.cmp-box:fullscreen .cmp-player,.cmp-box:fullscreen .cmp-ctl{width:min(100%,calc((100vh - 110px)*16/9));margin-inline:auto}
+.cmp-box.m:fullscreen .cmp-player,.cmp-box.m:fullscreen .cmp-ctl{width:min(100%,calc((100vh - 110px)*960/1890))}
+.cmp-cap{--c:var(--c1);display:flex;justify-content:space-between;align-items:flex-start;gap:14px 24px;flex-wrap:wrap;margin-top:18px}
+.cmp-cap>div{min-width:0;flex:1 1 420px}
+.cmp-cap .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.cmp-cap h3{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.cmp-cap p{font-size:15px;color:var(--muted);margin-top:6px;max-width:860px}
+.btn.sm{font:inherit;font-size:14px;font-weight:600;padding:9px 16px;cursor:pointer}
+@media (max-width:700px){.cmp-cap{order:-1;margin:0 0 16px}.cmp-cap h3{font-size:20px}}
+
 /* ---------- gallery ---------- */
 .filters{display:flex;flex-direction:column;gap:12px;margin-top:28px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 58px);z-index:20;background:rgba(245,247,249,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding-block:12px;border-bottom:1px solid var(--line)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -428,6 +470,7 @@ img{max-width:100%}
     <nav class="nav" aria-label="Sections">
       <a href="#overview" data-sec="overview">Overview</a>
       <a href="#leaderboard" data-sec="leaderboard">Leaderboard</a>
+      <a href="#compare" data-sec="compare">Compare</a>
       <a href="#gallery" data-sec="gallery">Gallery</a>
       <a href="#cite" data-sec="cite">Cite</a>
     </nav>
@@ -580,6 +623,26 @@ img{max-width:100%}
   </div>
 </section>
 
+<section class="block cmp-block" id="compare">
+  <div class="wrap">
+    <div class="kicker">Side by side</div>
+    <h2 class="h2">One task, thirteen agents.</h2>
+    <p class="lede">One task from each family. Each tile shows what one agent produced on the same case, ordered by the score of that run.</p>
+    <div class="cmp-groups" id="cmp-tabs" role="group" aria-label="Task to compare"></div>
+    <div class="cmp-stage">
+      <div class="cmp-box" id="cmp-box">
+        <div class="cmp-player" id="cmp-player"><video id="cmp-v" muted loop playsinline preload="none"></video></div>
+        <div class="cmp-ctl">
+          <button type="button" id="cmp-pp" aria-label="Play"></button>
+          <input type="range" id="cmp-seek" min="0" max="1000" value="0" step="1" aria-label="Position in the video">
+          <button type="button" id="cmp-fs" aria-label="Full screen"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1h4.5v1.6H2.6v2.9H1zM8.5 1H13v4.5h-1.6V2.6H8.5zM1 8.5h1.6v2.9h2.9V13H1zM11.4 8.5H13V13H8.5v-1.6h2.9z"/></svg></button>
+        </div>
+      </div>
+      <div class="cmp-cap" id="cmp-cap"></div>
+    </div>
+  </div>
+</section>
+
 <section class="block alt" id="gallery">
   <div class="wrap">
     <div class="kicker">Gallery</div>
@@ -678,7 +741,7 @@ fetch("data.json").then(function(r){return r.json()}).then(function(data){
     a.tokm=(a.tok[0]+a.tok[1]+a.tok[2]+a.tok[3])/4;});
   D.cats.forEach(function(c){c.families.forEach(function(f){f.cat=c.id;FAMS[f.id]=f})});
   D.tasks.forEach(function(t,i){t.i=i;t.cat=CAT_OF(t.fam)});
-  buildCaps();buildGlance();buildBoard();buildScatter();buildGallery();applyPin();
+  buildCaps();buildGlance();buildBoard();buildScatter();buildCompare();buildGallery();applyPin();
   routeHash();
 }).catch(function(){document.getElementById("board").innerHTML='<p class="empty">The score data could not be loaded. Reload the page to try again.</p>'});
 
@@ -832,6 +895,73 @@ function applyPin(){
   });
 }
 
+/* ---------- side by side ---------- */
+// one task per family: [task id, tab label, what the video shows]
+var CMP=[
+  ["D1.5","Forest","The camera in each tile moves through that agent’s own estimates of four input views. First tile: the input photos."],
+  ["D2.2","Dominoes","Each reconstruction rendered from input camera c0, at 0.375× speed. First tile: the input video from that camera."],
+  ["D3.5","Horse","Each agent’s horse played with its own rig and animation, in real time. First tile: the reference asset."],
+  ["D4.3","Cloth","One held-out control program, in real time. First tile: the true response."],
+  ["D5.4","Quadruped","One held-out control program, at 0.75× speed. First tile: the true response."],
+  ["D6.5","Sheet","One held-out loading history: the sheet is stretched, then released. First tile: the true response."],
+  ["D7.3","Truck","Each agent’s single live episode, replayed. The first 90 s are shown at 9× speed."],
+  ["D8.4","Crane","Each agent’s final action sequence, replayed at 4.8× speed. The last two seconds fast-forward the rest of GPT 5.6 Sol’s much longer sequence."],
+  ["D9.4","Drone","Each agent’s policy on one hidden start condition, at 9.2× speed."],
+  ["D10.3","Aircraft","Each agent’s updated simulator on one unseen action sequence, at 0.6× speed. First tile: the changed world."],
+  ["D11.1","Rod","Each agent’s updated simulator on one unseen action sequence, in real time. First tile: the changed world."],
+  ["D12.5","Ball & tray","The ball and tray simulated with each agent’s estimated contact parameters, at 1.2× speed. First tile: the true parameters."]];
+var CM={k:0,mq:matchMedia("(max-width:700px)"),rm:matchMedia("(prefers-reduced-motion: reduce)").matches,vis:false,held:false};
+var CMP_ICON={play:'<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z"/></svg>',pause:'<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5 1.5h3.2v11H2.5zM8.3 1.5h3.2v11H8.3z"/></svg>'};
+function cmpTask(k){var m=CMP[k][0].match(/^D(\d+)\.(\d)$/);return D.tasks[(+m[1]-1)*5+(+m[2]-1)]}
+function cmpIndex(id){for(var k=0;k<CMP.length;k++)if(CMP[k][0]===id)return k;return -1}
+function cmpPlay(){var v=document.getElementById("cmp-v"),p=v.play();if(p&&p.catch)p.catch(function(){})}
+function cmpSel(k,play){
+  CM.k=k;var t=cmpTask(k),narrow=CM.mq.matches,base="assets/compare/"+t.id+(narrow?".m":"");
+  document.querySelectorAll(".cmp-tab").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.k===k)});
+  var v=document.getElementById("cmp-v");
+  document.getElementById("cmp-box").classList.toggle("m",narrow);
+  v.poster=base+".webp";v.src=base+".mp4";CM.held=false;document.getElementById("cmp-seek").value=0;
+  v.setAttribute("aria-label","Results of all 13 agents on "+t.id+", "+t.title);
+  var cap=document.getElementById("cmp-cap");cap.style.setProperty("--c",CAT_COLOR[t.cat]);
+  cap.innerHTML='<div><div class="meta"><span class="pill">'+t.id+'</span><span class="pill">'+ROMAN[t.fam]+' · '+esc(FAMS[t.fam].name)+'</span></div>'+
+    '<h3>'+esc(t.title)+'</h3><p>'+esc(CMP[k][2])+'</p></div>'+
+    '<button type="button" class="btn sm" id="cmp-open">Task details and full ranking →</button>';
+  document.getElementById("cmp-open").onclick=function(){openTask(t.i)};
+  if(play&&!CM.rm)cmpPlay();
+}
+function buildCompare(){
+  var h="";
+  D.cats.forEach(function(c,ci){
+    h+='<div class="cmp-group" style="--c:'+CAT_COLOR[c.id]+'"><div class="cmp-gname">'+c.name+'</div><div class="cmp-row">';
+    for(var k=ci*3;k<ci*3+3;k++){var t=cmpTask(k);
+      h+='<button type="button" class="cmp-tab" style="--c:'+CAT_COLOR[c.id]+'" data-k="'+k+'" aria-pressed="false" title="'+esc(t.id+" · "+t.title)+'" aria-label="'+esc(t.id+", "+t.title)+'"><img src="'+t.thumb+'" alt="" loading="lazy" decoding="async"><span>'+esc(CMP[k][1])+'</span></button>';}
+    h+='</div></div>';
+  });
+  var tabs=document.getElementById("cmp-tabs");tabs.innerHTML=h;
+  tabs.addEventListener("click",function(e){var b=e.target.closest(".cmp-tab");if(!b)return;cmpSel(+b.dataset.k,true);
+    if(document.getElementById("cmp-player").getBoundingClientRect().top>innerHeight*.55)document.querySelector(".cmp-stage").scrollIntoView({block:"start"})});
+  var v=document.getElementById("cmp-v"),pp=document.getElementById("cmp-pp"),seek=document.getElementById("cmp-seek"),box=document.getElementById("cmp-box");
+  function icon(){pp.innerHTML=v.paused?CMP_ICON.play:CMP_ICON.pause;pp.setAttribute("aria-label",v.paused?"Play":"Pause")}
+  function toggle(){if(v.paused){CM.held=false;cmpPlay()}else{CM.held=true;v.pause()}}
+  ["play","pause","emptied"].forEach(function(ev){v.addEventListener(ev,icon)});icon();
+  pp.onclick=toggle;v.addEventListener("click",toggle);
+  v.addEventListener("timeupdate",function(){if(v.duration&&!seek._drag)seek.value=Math.round(v.currentTime/v.duration*1000)});
+  seek.addEventListener("pointerdown",function(){seek._drag=true});
+  seek.addEventListener("pointerup",function(){seek._drag=false});
+  seek.addEventListener("input",function(){
+    var go=function(){if(v.duration)v.currentTime=seek.value/1000*v.duration};
+    if(v.readyState<1){v.addEventListener("loadedmetadata",go,{once:true});v.preload="metadata";v.load()}else go()});
+  document.getElementById("cmp-fs").onclick=function(){
+    if(document.fullscreenElement){document.exitFullscreen();return}
+    if(box.requestFullscreen)box.requestFullscreen();else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen()};
+  cmpSel(0,false);
+  if("IntersectionObserver" in window){new IntersectionObserver(function(es){es.forEach(function(e){
+    CM.vis=e.isIntersecting;if(CM.rm)return;if(!CM.vis)v.pause();else if(!CM.held)cmpPlay()})},{threshold:.2}).observe(document.getElementById("cmp-player"))}
+  var onmq=function(){var playing=!v.paused;cmpSel(CM.k,playing||CM.vis)};
+  if(CM.mq.addEventListener)CM.mq.addEventListener("change",onmq);else if(CM.mq.addListener)CM.mq.addListener(onmq);
+}
+function showCompare(k){closeTask();cmpSel(k,true);document.getElementById("compare").scrollIntoView()}
+
 /* ---------- gallery ---------- */
 var G={cat:"all",fam:null,dom:"all",q:""};
 function buildGallery(){
@@ -900,7 +1030,7 @@ function openTask(i){
     return '<div class="rk" data-agent="'+s[0]+'"><span class="r'+(r===1?' top':'')+'">'+(r===1?LAUREL:r)+'</span><span class="n">'+esc(a.name)+'</span>'+
       '<div class="track" style="--c:'+c+'"><span style="--w:'+s[1]+'%"></span><i class="rng" style="left:'+lo+'%;width:'+Math.max(.6,hi-lo)+'%"></i></div>'+
       '<span class="val"><b>'+f2(s[1])+'</b><small>±'+f2(s[2])+'</small></span></div>'}).join("");
-  var prev=D.tasks[(i+59)%60],next=D.tasks[(i+1)%60];
+  var prev=D.tasks[(i+59)%60],next=D.tasks[(i+1)%60],ck=cmpIndex(t.id);
   dlg.innerHTML='<div class="dlg" style="--c:'+c+'"><div class="dlg-media"><div class="stage" id="stage"></div><div class="thumbs" id="thumbs">'+
     media.map(function(m,j){return '<button type="button" data-j="'+j+'" aria-pressed="'+(j===0)+'" aria-label="'+(m.vid?"Demonstration video":label(m.src))+'"><img src="'+m.src+'" alt=""></button>'}).join("")+
     '</div><div class="cap-line" id="capline"></div></div>'+
@@ -908,6 +1038,7 @@ function openTask(i){
     '<div><h2 id="dlg-title">'+esc(t.title)+'</h2><p class="sum">'+esc(t.sum)+'</p></div>'+
     '<div class="facts"><div><h5>Input</h5><p>'+esc(t.in)+'</p></div><div><h5>Expected output</h5><p>'+esc(t.out)+'</p></div>'+
     '<div><h5>What counts as correct</h5><p>'+esc(t.ok)+'</p></div><div><h5>How it is scored</h5><p>'+esc(t.score)+'</p></div></div>'+
+    (ck>=0?'<div><button type="button" class="btn sm" id="to-cmp"><span aria-hidden="true">▶</span> Watch all 13 agents side by side</button></div>':'')+
     '<div class="ranking"><h4>Agent ranking <small>Score / 100 · mean of 2 runs · bar marks ±</small></h4>'+rows+'</div>'+
     '<div class="dlg-nav"><button type="button" id="pv">← '+esc(prev.title)+'</button><button type="button" id="nx">'+esc(next.title)+' →</button></div></div></div>';
   function show(j){var m=media[j],st=document.getElementById("stage");
@@ -918,6 +1049,7 @@ function openTask(i){
   show(0);
   document.getElementById("thumbs").onclick=function(e){var b=e.target.closest("[data-j]");if(b)show(+b.dataset.j)};
   document.getElementById("x").onclick=closeTask;
+  if(ck>=0)document.getElementById("to-cmp").onclick=function(){showCompare(ck)};
   document.getElementById("pv").onclick=function(){openTask(prev.i)};
   document.getElementById("nx").onclick=function(){openTask(next.i)};
   dlg.querySelector(".ranking").onclick=function(e){var r=e.target.closest("[data-agent]");if(r)togglePin(r.dataset.agent)};
@@ -944,7 +1076,7 @@ window.addEventListener("hashchange",routeHash);
 })();
 
 /* ---------- nav highlight + copy ---------- */
-var secs=["overview","leaderboard","gallery","cite"].map(function(id){return document.getElementById(id)});
+var secs=["overview","leaderboard","compare","gallery","cite"].map(function(id){return document.getElementById(id)});
 if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
   document.querySelectorAll(".nav a").forEach(function(a){a.setAttribute("aria-current",a.dataset.sec===e.target.id)})}})},{rootMargin:"-45% 0px -50% 0px"});
   secs.forEach(function(s){io.observe(s)});}
