@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a clean white "lab sheet" on a faint simulation grid. The hero states the question, then a crisp filmstrip of the
+/* Layout: a clean white "lab sheet" on a faint simulation grid. The hero states the question over a drifting wall of the
    60 target scenes; data sections sit on alternating pale bands. Category hues are the paper's figure colors; gold is reserved for winners. */
 :root{
   color-scheme:light;
@@ -98,14 +98,35 @@ p{margin:0}
 .btn.ghost:hover{transform:none;border-color:var(--line-strong)}
 .btn.ghost small{font-weight:400;font-size:12px}
 
-.film{margin-top:clamp(40px,5vw,64px);display:grid;gap:12px;overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.film-row{display:flex;gap:12px;width:max-content;animation:drift var(--dur,140s) linear infinite}
-.film-row:nth-child(2){animation-direction:reverse}
-.film-row img{height:clamp(84px,9vw,124px);aspect-ratio:4/3;width:auto;object-fit:cover;border-radius:10px;display:block;border:1px solid var(--line);background:var(--soft)}
-.film:hover .film-row{animation-play-state:paused}
+.hero-top{position:relative;--th:clamp(84px,9vw,124px)}
+/* The wall of target scenes is decoration behind the hero text: it cannot be clicked and is hidden from assistive technology.
+   Narrow screens: it fills the top of the hero and dissolves before the title starts. */
+.film{position:absolute;inset:0 0 auto 0;height:calc(var(--th)*2 + 26px);z-index:-1;display:grid;align-content:start;gap:12px;padding-top:14px;overflow:hidden;pointer-events:none;user-select:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 calc(var(--th) + 20px),transparent calc(var(--th)*2 + 26px));
+  mask-image:linear-gradient(180deg,#000 0,#000 calc(var(--th) + 20px),transparent calc(var(--th)*2 + 26px))}
+.film-row{display:flex;gap:12px;width:max-content;animation:drift var(--dur,200s) linear infinite}
+.film-row:nth-child(even){animation-direction:reverse}
+.film-row:nth-child(n+3){display:none}
+.film-row img{height:var(--th);aspect-ratio:16/9;width:auto;object-fit:cover;border-radius:10px;display:block;border:1px solid rgba(16,24,38,.08);background:var(--soft)}
 @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.film-row{animation:none}}
+@media (max-width:1159px){.hero-inner{padding-top:calc(var(--th)*2 + 22px)}}
+/* Wide screens: the text keeps a column on the left and the wall fills the hero behind it, at full strength on the right. */
+@media (min-width:1160px){
+  .hero-top{--tx:calc(max(16px,(100vw - var(--wrap))/2 + 16px) + 700px)}
+  .hero-inner{padding-block:72px clamp(56px,6vw,88px)}
+  .hero-inner>*{max-width:700px}
+  .expand{font-size:24px}
+  .qcaps{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+  .film{inset:0;height:auto;gap:14px;padding-top:26px;
+    -webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.05) 0,rgba(0,0,0,.05) calc(var(--tx) - 30px),rgba(0,0,0,.5) calc(var(--tx) + 110px),#000 calc(var(--tx) + 230px)),linear-gradient(180deg,#000 0,#000 calc(100% - 150px),transparent 100%);
+    mask-image:linear-gradient(90deg,rgba(0,0,0,.05) 0,rgba(0,0,0,.05) calc(var(--tx) - 30px),rgba(0,0,0,.5) calc(var(--tx) + 110px),#000 calc(var(--tx) + 230px)),linear-gradient(180deg,#000 0,#000 calc(100% - 150px),transparent 100%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .film-row{gap:14px}
+  .film-row:nth-child(n+3){display:flex}
+  .film-row img{height:132px;border-radius:12px}
+  .hero .stats{margin-top:0}
+}
 
 .stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:clamp(32px,4vw,48px)}
 .stat{padding:4px 16px 0 0;border-left:1px solid var(--line);padding-left:16px}
@@ -512,6 +533,7 @@ img{max-width:100%}
 
 <main>
 <div class="hero" id="overview">
+  <div class="hero-top">
   <div class="wrap hero-inner">
     <h1 class="wordmark">CAESR<span class="b">-Bench</span></h1>
     <p class="expand">Benchmarking <b>C</b>oding <b>A</b>gents for <b>E</b>xecutable <b>S</b>cene <b>R</b>eplication</p>
@@ -531,13 +553,14 @@ img{max-width:100%}
     </div>
     <div class="cta">
       <a class="btn primary" href="#leaderboard">See the leaderboard ↓</a>
-      <a class="btn" href="#video"><span aria-hidden="true">▶</span> Watch the overview · 2 min</a>
+      <a class="btn" href="#video"><span aria-hidden="true">▶</span> Watch the overview · 3 min</a>
       <a class="btn" href="#gallery">Browse 60 tasks</a>
       <span class="btn ghost" title="Link will be added once the arXiv ID is assigned">arXiv <small>link coming</small></span>
       <span class="btn ghost" title="Link will be added at release">Code <small>link at release</small></span>
     </div>
   </div>
   <div class="film" aria-hidden="true" id="film"></div>
+  </div>
   <div class="wrap">
     <div class="stats num">
       <div class="stat"><b>4</b><span>capabilities</span></div>
@@ -724,14 +747,13 @@ img{max-width:100%}
 (function(){
 "use strict";
 var IDS=[];for(var f=1;f<=12;f++)for(var t=1;t<=5;t++)IDS.push("D"+f+"."+t);
-// hero filmstrip: two rows of thirty scenes, each duplicated for a seamless loop
+// hero wall: eight drifting rows of twenty scenes each (each row duplicated for a seamless loop). Narrow screens show two rows.
 (function(){
-  var film=document.getElementById("film");
-  for(var r=0;r<2;r++){
-    var row=document.createElement("div");row.className="film-row";row.style.setProperty("--dur",(170+r*30)+"s");
-    var part=IDS.filter(function(id,i){return i%2===r}),html="";
-    if(r===1)part.reverse();
-    part.concat(part).forEach(function(id){html+='<img src="media/'+id+'/thumbnail.webp" alt="" decoding="async">'});
+  var film=document.getElementById("film"),P=IDS.map(function(_,i){return IDS[i*7%60]});
+  for(var r=0;r<8;r++){
+    var row=document.createElement("div");row.className="film-row";row.style.setProperty("--dur",(230+(r*37)%70)+"s");
+    var part=[],html="";for(var i=0;i<20;i++)part.push(P[(r*20+Math.floor(r/3)*10+i)%60]);
+    part.concat(part).forEach(function(id){html+='<img src="media/'+id+'/thumbnail.webp" alt="" decoding="async" draggable="false">'});
     row.innerHTML=html;film.appendChild(row);
   }
 })();
