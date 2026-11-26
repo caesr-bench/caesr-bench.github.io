@@ -125,15 +125,15 @@ p{margin:0}
   .film-row{gap:14px}
   .film-row:nth-child(n+3){display:flex}
   .film-row img{height:132px;border-radius:12px}
-  .hero .stats{margin-top:0}
+  .hero .stats{margin-top:0;max-width:700px}
 }
 
-.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:clamp(32px,4vw,48px)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(32px,4vw,48px)}
 .stat{padding:4px 16px 0 0;border-left:1px solid var(--line);padding-left:16px}
 .stat:first-child{border-left:none;padding-left:0}
 .stat b{display:block;font-family:var(--f-display);font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
 .stat span{font-size:13px;color:var(--muted)}
-@media (max-width:860px){.stats{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:20px}.stat:nth-child(4){border-left:none;padding-left:0}}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:20px}.stat:nth-child(3){border-left:none;padding-left:0}}
 
 /* ---------- sections ---------- */
 section.block{padding-block:clamp(64px,8vw,104px)}
@@ -567,8 +567,6 @@ img{max-width:100%}
       <div class="stat"><b>12</b><span>task families</span></div>
       <div class="stat"><b>60</b><span>tasks</span></div>
       <div class="stat"><b>15</b><span>primary domains</span></div>
-      <div class="stat"><b>13</b><span>coding agents</span></div>
-      <div class="stat"><b>1,560</b><span>runs · 1 h each</span></div>
     </div>
   </div>
 </div>
