@@ -66,25 +66,28 @@ p{margin:0}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle at 1px 1px,var(--dotgrid) 1.2px,transparent 0);background-size:24px 24px;
   -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.6) 45%,transparent 80%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.6) 45%,transparent 80%)}
 .hero-inner{position:relative;z-index:0;max-width:1060px;display:grid;gap:18px;justify-items:center;align-content:center;text-align:center;
-  padding-block:calc(var(--th) + 24px)}
-/* White panel under the title block. It starts and ends in the gaps between wall rows (the script below snaps the height to whole rows). */
-.hero-inner::before{content:"";position:absolute;z-index:-1;inset:calc(var(--th) + 12px) -40px;background:#FFFFFF;--fx:120px;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 var(--fx),#000 calc(100% - var(--fx)),transparent),linear-gradient(180deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 var(--fx),#000 calc(100% - var(--fx)),transparent),linear-gradient(180deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);
-  -webkit-mask-composite:source-in;mask-composite:intersect}
-@media (max-width:1240px){.hero-inner::before{inset-inline:0;--fx:0px}}
+  padding-block:calc(var(--th)*.5 + 60px)}
+/* Frosted glass sheet under the title block: the wall stays visible through it as soft colour. */
+.hero-inner::before{content:"";position:absolute;z-index:-1;inset:calc(var(--th)*.5 + 8px) 0;border-radius:36px;background:rgba(255,255,255,.84);
+  -webkit-backdrop-filter:blur(28px) saturate(1.5);backdrop-filter:blur(28px) saturate(1.5);border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 30px 80px rgba(16,24,38,.16),0 2px 8px rgba(16,24,38,.06)}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.hero-inner::before{background:rgba(255,255,255,.95)}}
+@media (max-width:1100px){.hero-inner::before{inset-inline:16px;border-radius:30px}}
+@media (max-width:700px){.hero-inner::before{inset-inline:10px;border-radius:24px}}
+@media (max-width:1100px){.hero-inner{padding-inline:32px}}
+@media (max-width:700px){.hero-inner{padding-inline:22px}}
 .wordmark{font-weight:700;font-size:clamp(60px,10vw,128px);letter-spacing:-.055em;line-height:.92;display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;color:var(--ink)}
-.wordmark .b{font-weight:300;color:var(--faint);letter-spacing:-.035em;font-size:.5em;margin-left:.06em}
-.expand{font-family:var(--f-display);font-weight:500;font-size:clamp(19px,2.5vw,32px);line-height:1.25;color:var(--ink-2);letter-spacing:-.015em}
+.wordmark .b{font-weight:300;color:var(--muted);letter-spacing:-.035em;font-size:.5em;margin-left:.06em}
+.expand{font-family:var(--f-display);font-weight:500;font-size:clamp(19px,2.5vw,32px);line-height:1.25;color:var(--ink);letter-spacing:-.015em}
 @media (min-width:760px){.expand{white-space:nowrap}}
-.expand b{color:var(--ink);font-weight:700}
+.expand b{color:var(--c1);font-weight:700}
 .authors{display:grid;gap:10px;margin-top:14px;justify-items:center}
 .authors .names{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 24px;max-width:760px;font-size:clamp(17px,1.5vw,20px);color:var(--ink);font-weight:600}
-.authors .affs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 22px;font-size:clamp(14.5px,1.2vw,16.5px);color:var(--ink-2)}
-.authors .names a{text-decoration:none;color:inherit;background-image:linear-gradient(var(--line-strong),var(--line-strong));background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;transition:color .15s,background-image .15s}
-.authors .names a:hover{color:var(--c1);background-image:linear-gradient(var(--c1),var(--c1))}
-.authors sup{font-size:.68em;color:var(--faint);margin-left:1px}
-.say{font-family:var(--f-mono);font-size:12.5px;color:var(--faint)}
+.authors .affs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 22px;font-size:clamp(14.5px,1.2vw,16.5px);color:var(--muted)}
+.authors .names a{text-decoration:none;color:inherit;background-size:100% 1.5px;background-repeat:no-repeat;background-position:0 100%;transition:color .15s}
+.authors .names a:hover,.authors .names a:focus-visible{color:var(--c1);background-image:linear-gradient(var(--c1),var(--c1))}
+.authors sup{font-size:.68em;color:var(--muted);font-weight:500;margin-left:1px}
+.say{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
 .qblock{display:grid;gap:20px}
 .question{font-family:var(--f-display);font-weight:500;font-size:clamp(21px,2.1vw,27px);line-height:1.32;color:var(--ink);letter-spacing:-.015em}
 .question em{font-style:normal;font-weight:600;background-image:linear-gradient(transparent 58%,var(--mark) 58%);padding:0 2px}
@@ -101,18 +104,18 @@ p{margin:0}
 .btn:hover{border-color:var(--ink);transform:translateY(-1px)}
 .btn.primary{background:var(--ink);color:#FFFFFF;border-color:var(--ink)}
 .btn.primary:hover{background:var(--ink-2);border-color:var(--ink-2)}
-.btn.ghost{color:var(--faint);border-style:dashed;cursor:default}
-.btn.ghost:hover{transform:none;border-color:var(--line-strong)}
+.btn.ghost{color:var(--muted);border-color:transparent;background:rgba(16,24,38,.055);cursor:default}
+.btn.ghost:hover{transform:none;border-color:transparent}
 .btn.ghost small{font-weight:400;font-size:12px}
 @media (max-width:560px){.cta{gap:8px}.cta .btn{font-size:14px;padding:9px 14px}}
 
 .hero-top{position:relative;--th:clamp(84px,9vw,124px)}
 /* The wall of target scenes is decoration behind the title block: it cannot be clicked and is hidden from assistive technology.
-   The title block lies on a white panel, so the wall shows at full strength above, below and beside it. */
+   The title block lies on a frosted sheet, so the wall shows at full strength around it and as soft colour through it. */
 .film{position:absolute;inset:0;z-index:-1;display:grid;align-content:start;gap:12px;padding-top:12px;overflow:hidden;pointer-events:none;user-select:none}
 .film-row{display:flex;gap:12px;width:max-content;animation:drift var(--dur,200s) linear infinite}
 .film-row:nth-child(even){animation-direction:reverse}
-.film-row img{height:var(--th);aspect-ratio:16/9;width:auto;object-fit:cover;border-radius:10px;display:block;border:1px solid rgba(16,24,38,.08);background:var(--soft)}
+.film-row img{height:var(--th);aspect-ratio:16/9;width:auto;object-fit:cover;border-radius:10px;display:block;background:var(--soft)}
 @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.film-row{animation:none}}
 .hero-q{padding-top:clamp(28px,4vw,48px)}
@@ -744,13 +747,12 @@ var IDS=[];for(var f=1;f<=12;f++)for(var t=1;t<=5;t++)IDS.push("D"+f+"."+t);
     part.concat(part).forEach(function(id){html+='<img src="media/'+id+'/thumbnail.webp" alt="" decoding="async" draggable="false">'});
     row.innerHTML=html;film.appendChild(row);
   }
-  // Snap the hero height to whole wall rows, so the panel edges fall in the gaps between rows and no row is cut.
+  // Snap the hero height to whole wall rows, so the wall ends between two rows and none is cut.
   var inner=document.querySelector(".hero-inner");
   function snap(){
     inner.style.minHeight="";
-    var cs=getComputedStyle(inner),th=parseFloat(getComputedStyle(film.firstChild.firstChild).height),u=th+12;
-    var content=inner.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
-    inner.style.minHeight=((Math.ceil((content+48)/u)+2)*u+12)+"px";
+    var u=parseFloat(getComputedStyle(film.firstChild.firstChild).height)+12;
+    inner.style.minHeight=(Math.ceil((inner.offsetHeight-12)/u)*u+12)+"px";
   }
   snap();addEventListener("resize",snap);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(snap);
